@@ -4,7 +4,7 @@
 Development work is presently ongoing on the gameplay and interface.
 
 The game draws inspiration from a very popular game - "Snake Xenzia" which was originally shipped with first generation cell phones made by Nokia Corporation.
-The game is built with the Python programming language, precisely Python 3.
+The game is built with the Python programming language, precisely Python 3.                                                                                                
 Here are some features of the game:
 *
 *
