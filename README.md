@@ -5,8 +5,11 @@ Development work is presently ongoing on the gameplay and interface.
 
 The game draws inspiration from a very popular game - "Snake Xenzia" which was originally shipped with first generation cell phones made by Nokia Corporation.
 Here are some features of the game:
+*
+*
+*
 
-## GamePlay
+## Game play:
 
 
 ## Authors:
