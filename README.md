@@ -17,5 +17,6 @@ Here are some features of the game:
 
 
 ## Authors:
-Trust Eniola (trusteniola@gmail.com)                                                                                                                                      
+Trust Eniola (trusteniola@gmail.com)
+                                                                                                                                      
 Tosin Owoeye (tfrankie55@github.com)
