@@ -10,33 +10,39 @@ pygame.init()
 # Set up the game window and snake section size
 size_x = 650
 size_y = 475
+
 screen = pygame.display.set_mode((700, 540))
 
 # Set up some colors
 blue = (0, 0, 255)
-red = (255, 0, 0)
+red = (255, 30, 0)
 black = (0, 0 ,0)
 white = (255, 255, 255)
+yellow = (255, 255, 102)
 bg = (156, 234, 235)
 snake_col = (242, 78, 2)
 button = (232, 183, 2)
+
 
 # Set game title
 pygame.display.set_caption('Naija Snake')
 
 # snake features
 snake_len = 10
-speed = 5
+speed = 10
+clock = pygame.time.Clock()
 
-# font type and size
+
+# font types and sizes
 bold_font = pygame.font.SysFont(None, 50)
-text_font = pygame.font.SysFont(None, 10)
-
+text_font = pygame.font.SysFont(None, 25)
+score_font = pygame.font.SysFont("comicsansms", 35)
 
 
 # Button objects
 left_butt = pygame.Rect(5, 482, 100, 50)
 right_butt = pygame.Rect(595, 482, 100, 50)
+
 
 def draw(surf, color, obj, br=0):
     """ Draw the desired rectangle object """
@@ -45,11 +51,11 @@ def draw(surf, color, obj, br=0):
 def show_message(msg, color):
     """ Display a custom message on the screen """
     mssg = bold_font.render(msg, True, color)
-    screen.blit(mssg, [size_x/2, size_y/2])
+    screen.blit(mssg, [(size_x/2) - 70, size_y/2])
 
 def writer(txt, color, pos):
     """"
-    Helps with text interlay, writing custom text
+    Helps with text interlay, writing custom text on the surface
     txt - string
     color - tuple
     pos - list
@@ -59,16 +65,14 @@ def writer(txt, color, pos):
     
 def food_pos_gen():
     """ generates a tuple with random positions for the snake food """
-    x = random.randrange(0, size_x - snake_len) / 10.0) * 10.0
-    y = random.randrange(0, size_y - snake_len) / 10.0) * 10.0
+    x = round(random.randrange(50,  size_x) / 10.0) * 10.0
+    y = round(random.randrange(50, size_y) / 10.0) * 10.0
     return (x, y)
 
-def xtend_snake(snake_len, snake_list):
+def xtend_snake(snake_length, snake_list):
     """ Increase the snake length according to initial length increments """
     for pos in snake_list:
-        pygame.draw.rect(screen, snake_col, [pos[0], pos[1], snake_len, snake_len])
-
-clock = pygame.time.Clock()
+        pygame.draw.rect(screen, snake_col, [pos[0], pos[1], snake_length, snake_length])
         
 def main_loop():
     # Run until the user asks to quit
@@ -76,14 +80,17 @@ def main_loop():
     closed = False
     
     # Snake position, size and movement initialisers
-    x_pos = size_x / 2
-    y_pos = size_y / 2
+    x_pos = 50
+    y_pos = 60
     move_hor = 0
     move_ver = 0
     snake_len_list = []
-    snake_len = 10
+    Snake_length = 1
     
-    food_pos = food_pos_gen()
+    #food_pos = food_pos_gen()
+    foodx = round(random.randrange(50, size_x - snake_len) / 10.0) * 10.0
+    foody = round(random.randrange(50, size_y - snake_len) / 10.0) * 10.0
+    
     while running:
 
         # Did the user click the window close button?
@@ -106,21 +113,16 @@ def main_loop():
                     move_ver = snake_len
                     move_hor = 0
 
-        # Make the snake continue in the headed direction
-        # when it moves out of the screen border
-        if x_pos < (size_x) and x_pos >= 50:
+        # Game over if snake hits border
+        if x_pos < (size_x-snake_len) and x_pos >= 50:
             x_pos += move_hor
-        elif (x_pos >= size_x):
-            x_pos = 50
-        elif (x_pos < 50):
-            x_pos = size_x-1
-
-        if y_pos+5 < size_y and y_pos >= 50:
+        elif x_pos <= 50 or x_pos >= 640:
+            running = False
+        
+        if y_pos < (size_y-snake_len) and y_pos >= 50:
             y_pos += move_ver
-        elif (y_pos+5 >= size_y):
-            y_pos = 51
-        elif (y_pos-10 <= 50):
-            y_pos = size_y-1
+        elif y_pos <= 50 or y_pos >= 465:
+            running = False
 
         # Game over when snake bites itself
         #if x_pos in snake_pos or y_pos in snake_pos:
@@ -136,34 +138,72 @@ def main_loop():
         pygame.draw.line(screen, blue, (size_x, 50), (size_x, size_y))
 
         # Button Section
-        left = [5, 452]
-        right = [595, 452]
+        left = [35, 498]
+        right = [619, 498]
         draw(screen, button, left_butt, br=14)
         writer("Menu", blue, left)
         draw(screen, button, right_butt, br=14)
         writer("Pause", red, right)
+
+        pygame.draw.rect(screen, blue, [foodx, foody, snake_len, snake_len])
+        #pygame.draw.rect(screen, snake_col, [x_pos, y_pos, snake_len, snake_len])
         
+        # Create the food
+        #food = pygame.Rect(food_pos, (snake_len, snake_len))
+        
+        # Draw the food on the screen
+        #draw(screen, blue, food)
 
         # Create the snake head rect
-        snake_head = pygame.Rect(x_pos, y_pos, snake_len, snake_len)
+        snake_Head = []
+        snake_Head.append(x_pos)
+        snake_Head.append(y_pos)
+        snake_len_list.append(snake_Head)
+        if len(snake_len_list) > Snake_length:
+            del snake_len_list[0]
+        
+        # Game over when snake bites itself
+        for x in snake_len_list[:-1]:
+            if x == snake_Head:
+                running = False
 
-        # Draw the snake on the screen
-        draw(screen, snake_col, snake_head, br=3)
+        # Extend the snake
+        xtend_snake(snake_len, snake_len_list)
+        
+        # Write Scoreboard
+        writer("Your Score: " + str(Snake_length - 1), yellow, [50, 50])
+
+        #update display
+        pygame.display.update()
+        #snake_head = pygame.Rect(x_pos, y_pos, snake_len, snake_len)
+
+        ## Draw the snake on the screen
+        #draw(screen, snake_col, snake_head)
 
         # Flip the display
         pygame.display.update()
         
-        if (x_pos, y_pos) == food_pos:
-            print("SWALLOWED")
+        # Increase the snake Length scoreboard as it eats food and respawn the food in new position
+        if x_pos == foodx and y_pos == foody:
+            foodx = round(random.randrange(50, size_x - snake_len) / 10.0) * 10.0
+            foody = round(random.randrange(50, size_y - snake_len) / 10.0) * 10.0
+            Snake_length += 1
+        
+        """if (x_pos, y_pos) == food_pos:
+            food_pos = food_pos_gen()
+            #Snake_length += 1
+            print("SWALLOWED")"""
 
         # Increment the clock time
         clock.tick(speed)
 
-# show game-over message
-show_message("Game Over", red)
-pygame.display.update()
-time.sleep(5)    
-    
-# Done! Time to quit.
-pygame.quit()
-quit()
+    # show game-over message
+    screen.fill(bg)
+    show_message("Game Over", red)
+    pygame.display.update()   
+        
+    # Done! Time to quit.
+    pygame.quit()
+    quit()
+
+main_loop()
