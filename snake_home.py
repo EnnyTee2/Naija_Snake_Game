@@ -2,8 +2,6 @@
 import random
 import time
 
-def food_pos_gen(a, b):
-    return ()
 
 # Import and initialize the pygame library
 import pygame
@@ -26,12 +24,15 @@ button = (232, 183, 2)
 # Set game title
 pygame.display.set_caption('Naija Snake')
 
+# snake features
+snake_len = 10
 speed = 5
 
 # font type and size
-font_type = pygame.font.SysFont(None, 50)
+bold_font = pygame.font.SysFont(None, 50)
+text_font = pygame.font.SysFont(None, 10)
 
-clock = pygame.time.Clock()
+
 
 # Button objects
 left_butt = pygame.Rect(5, 482, 100, 50)
@@ -43,9 +44,32 @@ def draw(surf, color, obj, br=0):
 
 def show_message(msg, color):
     """ Display a custom message on the screen """
-    mssg = font_type.render(msg, True, color)
+    mssg = bold_font.render(msg, True, color)
     screen.blit(mssg, [size_x/2, size_y/2])
 
+def writer(txt, color, pos):
+    """"
+    Helps with text interlay, writing custom text
+    txt - string
+    color - tuple
+    pos - list
+    """
+    text = text_font.render(txt, True, color)
+    screen.blit(text, pos)
+    
+def food_pos_gen():
+    """ generates a tuple with random positions for the snake food """
+    x = random.randrange(0, size_x - snake_len) / 10.0) * 10.0
+    y = random.randrange(0, size_y - snake_len) / 10.0) * 10.0
+    return (x, y)
+
+def xtend_snake(snake_len, snake_list):
+    """ Increase the snake length according to initial length increments """
+    for pos in snake_list:
+        pygame.draw.rect(screen, snake_col, [pos[0], pos[1], snake_len, snake_len])
+
+clock = pygame.time.Clock()
+        
 def main_loop():
     # Run until the user asks to quit
     running = True
@@ -59,6 +83,7 @@ def main_loop():
     snake_len_list = []
     snake_len = 10
     
+    food_pos = food_pos_gen()
     while running:
 
         # Did the user click the window close button?
@@ -69,16 +94,16 @@ def main_loop():
             # Listen for key events and take desired action
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    move_hor = -speed
+                    move_hor = -snake_len
                     move_ver = 0
                 elif event.key == pygame.K_RIGHT:
-                    move_hor = speed
+                    move_hor = snake_len
                     move_ver = 0
                 elif event.key == pygame.K_UP:
-                    move_ver = -speed
+                    move_ver = -snake_len
                     move_hor = 0
                 elif event.key == pygame.K_DOWN:
-                    move_ver = speed
+                    move_ver = snake_len
                     move_hor = 0
 
         # Make the snake continue in the headed direction
@@ -98,8 +123,8 @@ def main_loop():
             y_pos = size_y-1
 
         # Game over when snake bites itself
-        if x_pos in snake_pos or y_pos in snake_pos:
-            running = False
+        #if x_pos in snake_pos or y_pos in snake_pos:
+        #    running = False
 
         # Fill the background with specified background color
         screen.fill(bg)
@@ -111,24 +136,28 @@ def main_loop():
         pygame.draw.line(screen, blue, (size_x, 50), (size_x, size_y))
 
         # Button Section
+        left = [5, 452]
+        right = [595, 452]
         draw(screen, button, left_butt, br=14)
+        writer("Menu", blue, left)
         draw(screen, button, right_butt, br=14)
+        writer("Pause", red, right)
+        
 
         # Create the snake head rect
         snake_head = pygame.Rect(x_pos, y_pos, snake_len, snake_len)
 
         # Draw the snake on the screen
         draw(screen, snake_col, snake_head, br=3)
-        def xtend_snake(snake_len, snake_list):
-            """ Increase the snake length according to initial length increments """
-            for x in snake_list:
-                pygame.draw.rect(dis, black, [x[0], x[1], snake_len, snake_len])
 
         # Flip the display
         pygame.display.update()
+        
+        if (x_pos, y_pos) == food_pos:
+            print("SWALLOWED")
 
         # Increment the clock time
-        clock.tick(30)
+        clock.tick(speed)
 
 # show game-over message
 show_message("Game Over", red)
