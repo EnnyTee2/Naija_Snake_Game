@@ -171,9 +171,9 @@ def main_loop():
         xtend_snake(snake_len, snake_len_list)
         
         # Write Scoreboard
-        writer("Your Score: " + str(Snake_length - 1), yellow, [50, 50])
+        writer("Your Score: " + str(Snake_length - 1), snake_col, [20, 20])
 
-        #update display
+        # Update display
         pygame.display.update()
         #snake_head = pygame.Rect(x_pos, y_pos, snake_len, snake_len)
 
@@ -183,7 +183,7 @@ def main_loop():
         # Flip the display
         pygame.display.update()
         
-        # Increase the snake Length scoreboard as it eats food and respawn the food in new position
+        # Increase the snake length tracker as it eats food and respawn the food in new position
         if x_pos == foodx and y_pos == foody:
             foodx = round(random.randrange(50, size_x - snake_len) / 10.0) * 10.0
             foody = round(random.randrange(50, size_y - snake_len) / 10.0) * 10.0
