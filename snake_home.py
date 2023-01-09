@@ -145,14 +145,14 @@ def main_loop():
         draw(screen, button, right_butt, br=14)
         writer("Pause", red, right)
 
-        pygame.draw.rect(screen, blue, [foodx, foody, snake_len, snake_len])
+        #pygame.draw.rect(screen, blue, [foodx, foody, snake_len, snake_len])
         #pygame.draw.rect(screen, snake_col, [x_pos, y_pos, snake_len, snake_len])
         
         # Create the food
-        #food = pygame.Rect(food_pos, (snake_len, snake_len))
+        food = pygame.Rect(foodx, foody, snake_len, snake_len)
         
         # Draw the food on the screen
-        #draw(screen, blue, food)
+        draw(screen, blue, food, br=3)
 
         # Create the snake head rect
         snake_Head = []
