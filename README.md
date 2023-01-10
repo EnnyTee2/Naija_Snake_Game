@@ -1,4 +1,4 @@
-# Naija Snake v1.0
+# Naija Snake v1.0 :snake:
 
 ## This repository contains a snake game built as part of the portfolio project requirement for the ALX Software Engineering Programme.
 Development work is presently ongoing on the gameplay and interface.
@@ -13,11 +13,11 @@ https://medium.com/@trusteniola_51781/naija-snake-1-0-my-experience-building-a-m
 ## Libraries and Software Packages Used :couple:
 * Pygame
                                                                                                                                  
-## Installation
+## Installation :wrench:
 * Install Python3 (https://www.python.org/downloads/)
 * Add Pygame to your Python Installation (https://pypi.org/project/pygame/)
 * Download the python script 'snake_home.py' from this repo and execute it with your python installation                                                                                                                                                           
-## Usage (Game play):
+## Usage (Game play): :video_game:
 * Use the Arrow buttons on the keyboard to move the snake towards the food
 * Game over when snake hits the wall or bites itself.
                                                                                                                                  
