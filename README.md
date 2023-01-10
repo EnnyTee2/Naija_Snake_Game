@@ -9,10 +9,7 @@ The game is built with the Python programming language, precisely Python 3.
 You may read more about the development in this blog post:                                                                           
 https://medium.com/@trusteniola_51781/naija-snake-1-0-my-experience-building-a-modern-snake-game-in-python-3b7811d8973d
 
-Here are some features of the game:
-*
-*
-*
+
 ## Libraries and Software Packages Used:
 * Pygame
 
