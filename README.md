@@ -23,3 +23,4 @@ Trust Eniola (trusteniola@gmail.com)
 Tosin Owoeye (tfrankie55@github.com)
 
 ## Licensing:
+GNU General Public License v3
