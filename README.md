@@ -8,7 +8,8 @@ The game draws inspiration from a very popular game - "Snake Xenzia" which was o
 The game is built with the Python programming language, precisely Python 3. 
 
 You may read more about the development in this blog post:   :newspaper:                                                                        
-https://medium.com/@trusteniola_51781/naija-snake-1-0-my-experience-building-a-modern-snake-game-in-python-3b7811d8973d
+[Naija Snake 1.0: My Experience Building A Modern Snake Game in Python](https://medium.com/@trusteniola_51781/naija-snake-1-0-my-experience-building-a-modern-snake-game-in-python-3b7811d8973d)
+
                                                                                                                                      
 ## Libraries and Software Packages Used :couple:
 * Pygame
