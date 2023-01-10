@@ -11,7 +11,6 @@ Here are some features of the game:
 *
 ## Libraries and Software Packages Used:
 * Pygame
-* SqlAlchemy
 
 ## Game play:
 
