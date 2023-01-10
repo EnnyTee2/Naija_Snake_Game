@@ -11,6 +11,7 @@ pygame.init()
 size_x = 650
 size_y = 475
 
+# Define the surface for the game
 screen = pygame.display.set_mode((700, 540))
 
 # Set up some colors
@@ -27,38 +28,46 @@ button = (232, 183, 2)
 # Set game title
 pygame.display.set_caption('Naija Snake')
 
-# snake features
+# Predefine some snake features
 snake_len = 10
 speed = 10
 clock = pygame.time.Clock()
 
 
-# font types and sizes
+# Set up some font types and sizes
 bold_font = pygame.font.SysFont(None, 50)
 text_font = pygame.font.SysFont(None, 25)
 score_font = pygame.font.SysFont("comicsansms", 35)
 
 
-# Button objects
+# Rect objects for left and right buttons 
 left_butt = pygame.Rect(5, 482, 100, 50)
 right_butt = pygame.Rect(595, 482, 100, 50)
 
 
 def draw(surf, color, obj, br=0):
-    """ Draw the desired rectangle object """
+    """ Draw the desired rectangle object 
+        surf -> pygame surface object
+        color -> tuple
+        obj -> pygame object to be drawn
+        br -> int, border radius
+    """
     return pygame.draw.rect(surf, color, obj, border_radius=br)
 
 def show_message(msg, color):
-    """ Display a custom message on the screen """
+    """ Display a custom message on the screen 
+        msg -> string
+        color -> tuple
+    """
     mssg = bold_font.render(msg, True, color)
     screen.blit(mssg, [(size_x/2) - 70, size_y/2])
 
 def writer(txt, color, pos):
     """"
     Helps with text interlay, writing custom text on the surface
-    txt - string
-    color - tuple
-    pos - list
+    txt -> string
+    color -> tuple
+    pos -> list containing position coordinates
     """
     text = text_font.render(txt, True, color)
     screen.blit(text, pos)
@@ -70,7 +79,11 @@ def food_pos_gen():
     return (x, y)
 
 def xtend_snake(snake_length, snake_list):
-    """ Increase the snake length according to initial length increments """
+    """ Increase the snake length according to initial length increments 
+        snake_length -> int denoting length of snake
+        snake_list -> list containing snake body segments' position coordinates
+    """
+    # For loop to draw the snake with all segemnts found in snake_list
     for pos in snake_list:
         pygame.draw.rect(screen, snake_col, [pos[0], pos[1], snake_length, snake_length])
       
@@ -87,9 +100,10 @@ def main_loop():
     snake_len_list = []
     Snake_length = 1
     
-    # generate food position
+    # Generate food position
     food_pos = food_pos_gen()
     
+    # Infinite loop to handle main game cycle
     while running:
 
         # Did the user click the window close button?
@@ -156,10 +170,10 @@ def main_loop():
             del snake_len_list[0]
         
         # Game over when snake bites itself
-        for x in snake_len_list[:-1]:
-            if x == snake_Head:
+        for x in snake_len_list[:-1]: # Excluded the most recent element in snake_len_list
+            if x == snake_Head: # If any of the body segement collides with the snake head
                 time.sleep(2) # wait 2 seconds
-                running = False
+                running = False # Game over
 
         # Extend the snake
         xtend_snake(snake_len, snake_len_list)
@@ -169,7 +183,7 @@ def main_loop():
 
         #update display
         pygame.display.update()
-        #snake_head = pygame.Rect(x_pos, y_pos, snake_len, snake_len)
+        
 
         ## Draw the snake on the screen
         #draw(screen, snake_col, snake_head)
@@ -177,7 +191,7 @@ def main_loop():
         # Flip the display
         pygame.display.update()
         
-        # Increase the snake Length scoreboard as it eats food and respawn the food in new position
+        # Increase the snake Length scoreboard as it eats food then respawn the food in a new position
         if (x_pos, y_pos) == food_pos:
             food_pos = food_pos_gen()
             Snake_length += 1
